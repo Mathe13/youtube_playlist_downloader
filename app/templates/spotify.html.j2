@@ -1,0 +1,41 @@
+{% extends "base.html.j2" %}
+{% block title %}
+    Baixe sua playlist favorita
+{% endblock %}
+{% block style %}
+    {{super()}}
+  <style>
+      ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #1abc9c;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: #1abc9c;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: #1abc9c;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+      color: #1abc9c;
+    }
+    input{
+      color: #1abc9c
+    }
+  </style>
+{% endblock %}
+{% block body %}
+    <h3>Download de playlists do spotify via Youtube</h3>
+    {% if token %}
+        <form method="POST" action="SpotifyDownloader/baixar">
+            <input type="text" name="playlist_link"  placeholder="Digite o link">
+            <input class="btn btn-secondary btn-lg" type="submit" value="Download">
+        </form>
+    {%else%}
+        <h2>Para proseguir conecte-se ao spotify e autorize a aplicação</h2>
+        <!-- http://127.0.0.1:5000{{url_for('Spotify')}} -->
+        <!-- TODO fix oath token url for routing the spotify download -->
+        <a href="https://accounts.spotify.com/en/authorize?client_id=6ffa9769e7bc43feadd3f7a5e8a83cff&redirect_uri=http://127.0.0.1:5000{{url_for('Spotify')}}&response_type=token">
+            <span class="btn btn-secondary btn-lg">conecte-se</span>
+        </a>
+    {% endif %}
+
+{% endblock %}
