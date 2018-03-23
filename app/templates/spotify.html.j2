@@ -23,13 +23,37 @@
   </style>
 {% endblock %}
 {% block body %}
-    <h3>Download de playlists do spotify via Youtube</h3>
+<script>
+  function teste(){
+    var currentLocation = window.location.href;
+    //alert(currentLocation);
+    var i = 0;
+    var start = 0;
+    var newURL = "";
+    while(i <= currentLocation.length){
+      if(start == 1){
+        if(currentLocation[i] != undefined){
+          newURL = newURL.concat(currentLocation[i]);
+        }
+      }else if(currentLocation[i] == "#"){
+        start = 1;
+      }
+      i++;
+    }
+    if(start==1){
+      window.location.href = newURL;
+    }
+  }
+teste();
+</script>
+    <h3 onLoad='teste()'>Download de playlists do spotify via Youtube</h3>
     {% if token %}
         <form method="POST" action="SpotifyDownloader/baixar">
             <input type="text" name="playlist_link"  placeholder="Digite o link">
             <input class="btn btn-secondary btn-lg" type="submit" value="Download">
         </form>
     {%else%}
+      <input type="button" onClick='teste()''>
         <h2>Para proseguir conecte-se ao spotify e autorize a aplicação</h2>
         <!-- http://127.0.0.1:5000{{url_for('Spotify')}} -->
         <!-- TODO fix oath token url for routing the spotify download -->
